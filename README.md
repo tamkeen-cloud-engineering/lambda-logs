@@ -34,7 +34,7 @@ brew install aws-sam-cli
 
 This checks to see if the `template.yaml` file is valid.
 
-```
+```sh
 sam validate
 ```
 
@@ -54,6 +54,14 @@ This will spin up a Docker container to test the application locally. You can go
 sam local start-api
 ```
 
+## Invoke the function
+
+Invoke the function locally. You should see the return message from the Lambda function.
+
+```sh
+sam local invoke <name-of-your-function>
+```
+
 ## Deploy the application
 
 This will deploy the application based on the configuration in `samconfig.toml`.
@@ -61,4 +69,3 @@ This will deploy the application based on the configuration in `samconfig.toml`.
 ```sh
 sam deploy
 ```
-
