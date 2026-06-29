@@ -1,23 +1,23 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: A simple serverless application.
+Description: Observability Lab - Simulated API Logs
 
 Resources:
-  SimpleGreetingFunction:
+  LogLevelFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: hello.lambda_handler
+      Handler: logs.lambda_handler
       Runtime: python3.14
       CodeUri: ./src
       Events:
-        HelloWorldApi:
+        LogLevelApi:
           Type: Api
           Properties:
-            Path: /greet
+            Path: /log/{level}
             Method: get
 
 Outputs:
   PublicApiUrl:
     Description: "The live URL for your API Gateway"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/greet"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/log"
 

@@ -69,3 +69,11 @@ This will deploy the application based on the configuration in `samconfig.toml`.
 ```sh
 sam deploy
 ```
+
+## Destroy the application
+
+This will destory the application and its infrastructure.
+
+```sh
+sam delete
+```
