@@ -2,6 +2,10 @@
 
 A simple lambda service to log the different log levels.
 
+## Diagram
+
+![Diagram](./docs/assets/diagram.drawio.png)
+
 ## Prerequisites
 
 * An AWS account - a [sandbox](https://www.whizlabs.com/labs/sandbox/aws/aws-sandbox) account works as well.
@@ -85,4 +89,3 @@ This will destory the application and its infrastructure.
 ```sh
 sam delete
 ```
-
