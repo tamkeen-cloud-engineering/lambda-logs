@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Observability Lab - Simulated API Logs
 
+Globals:
+  Api:
+    TracingEnabled: true
+
 Resources:
   LogLevelFunction:
     Type: AWS::Serverless::Function
@@ -9,6 +13,7 @@ Resources:
       Handler: logs.lambda_handler
       Runtime: python3.14
       CodeUri: ./src
+      Tracing: Active
       Events:
         LogLevelApi:
           Type: Api
