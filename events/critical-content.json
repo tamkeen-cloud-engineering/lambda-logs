@@ -1,0 +1,8 @@
+{
+  "pathParameters": {
+    "level": "critical"
+  },
+  "queryStringParameters": {
+    "content": "A custom critical message"
+  }
+}

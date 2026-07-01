@@ -1,0 +1,8 @@
+{
+  "pathParameters": {
+    "level": "info"
+  },
+  "queryStringParameters": {
+    "content": "A custom info message"
+  }
+}

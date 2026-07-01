@@ -1,0 +1,8 @@
+{
+  "pathParameters": {
+    "level": "error"
+  },
+  "queryStringParameters": {
+    "content": "A custom error message"
+  }
+}

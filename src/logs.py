@@ -5,32 +5,57 @@ import logging
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+LEVEL_LABELS = {
+    "debug": "DEBUG",
+    "info": "INFO",
+    "warn": "WARN",
+    "error": "ERROR",
+    "critical": "CRITICAL",
+}
+
+DEFAULT_MESSAGES = {
+    "debug": "DEBUG: Database connection pool health check: 12 active connections.",
+    "info": "INFO: User 'student_42' successfully logged in from IP 192.168.1.1.",
+    "warn": "WARN: High memory usage detected (82%). Performance may degrade.",
+    "error": "ERROR: Failed to fetch user profile. Database timeout after 5000ms.",
+    "critical": "CRITICAL: Payment gateway unreachable. All checkout transactions are failing!",
+}
+
+LOG_METHODS = {
+    "debug": logger.debug,
+    "info": logger.info,
+    "warn": logger.warning,
+    "error": logger.error,
+    "critical": logger.critical,
+}
+
+
 def lambda_handler(event, context):
-    # Grab the log level from the URL path parameter
-    # e.g., if path is /api/log/warn, level is "warn"
-    level = event.get('pathParameters', {}).get('level', 'info').lower()
-    
-    if level == 'debug':
-        logger.debug("DEBUG: Database connection pool health check: 12 active connections.")
-        msg = "Logged a DEBUG message."
-    elif level == 'info':
-        logger.info("INFO: User 'student_42' successfully logged in from IP 192.168.1.1.")
-        msg = "Logged an INFO message."
-    elif level == 'warn':
-        logger.warning("WARN: High memory usage detected (82%). Performance may degrade.")
-        msg = "Logged a WARNING message."
-    elif level == 'error':
-        logger.error("ERROR: Failed to fetch user profile. Database timeout after 5000ms.")
-        msg = "Logged an ERROR message."
-    elif level == 'critical':
-        logger.critical("CRITICAL: Payment gateway unreachable. All checkout transactions are failing!")
-        msg = "Logged a CRITICAL message."
+    level = (event.get("pathParameters") or {}).get("level", "info").lower()
+    content = (event.get("queryStringParameters") or {}).get("content")
+
+    if content:
+        label = LEVEL_LABELS.get(level, "INFO")
+        log_message = f"{label}: {content}"
     else:
-        logger.info(f"INFO: Standard hit on fallback endpoint with value: {level}")
+        log_message = DEFAULT_MESSAGES.get(level)
+
+    log_func = LOG_METHODS.get(level)
+    if log_func and log_message:
+        log_func(log_message)
+        msg = f"Logged a {level.upper()} message."
+    else:
+        fallback_msg = (
+            log_message
+            or f"INFO: Standard hit on fallback endpoint with value: {level}"
+        )
+        logger.info(fallback_msg)
         msg = "Logged default message."
 
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "application/json"},
-        "body": json.dumps({"status": "success", "message": msg, "simulated_level": level})
+        "body": json.dumps(
+            {"status": "success", "message": msg, "simulated_level": level}
+        ),
     }

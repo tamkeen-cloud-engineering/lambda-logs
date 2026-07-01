@@ -1,0 +1,8 @@
+{
+  "pathParameters": {
+    "level": "warn"
+  },
+  "queryStringParameters": {
+    "content": "A custom warning message"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "pathParameters": {
+    "level": "debug"
+  },
+  "queryStringParameters": {
+    "content": "A custom debug message"
+  }
+}
